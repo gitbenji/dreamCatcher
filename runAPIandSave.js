@@ -3,6 +3,7 @@
 
 var dotenv = require('dotenv').load();
 var mongoose = require('mongoose');
+var glob = require('glob');
 
 
 // set up mongodb mongoose connection & models

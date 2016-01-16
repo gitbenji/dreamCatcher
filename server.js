@@ -11,7 +11,6 @@ var fs = require('fs');
 
 var dotenv = require('dotenv').load();
 var mongoose = require('mongoose');
-var glob = require('glob');
 var Q = require('q');
 
 
