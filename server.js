@@ -3,6 +3,7 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var http = require('http');
+var path = require('path');
 var port = 6000;
 var app = {};
 var child_process = require('child_process').exec;
@@ -18,7 +19,7 @@ var e = app.e = express();
 app.server = app.server = http.createServer(e);
 
 
-e.use(express.static(__dirname + '/public'));
+e.use('/static', express.static(__dirname + '/public'));
 e.use(bodyParser.json()); //HELP this doesn't allow post to run
 e.use(bodyParser.urlencoded({ extended: true })); //HELP what is extension
 
@@ -100,12 +101,13 @@ function execute(string, res) {
 function finish(res) {
 	var randomPath = (Math.floor(Math.random() * (9999999999 - 1000000000 +1)) + 1000000000) + '.mp4';
 	var filepath = process.env.PATH_TO_DIR + process.env.PATH_TO_MERGED_CLIPS + randomPath;
+	var thumbnailPath = thumbnail(filepath);
 	child_process('ffmpeg -i intermediate_all.mpg -qscale:v 2 ' + filepath, function (err, data) {
 		if(err)
 			console.log(err);
 
 		
-		res.send({video: 'http://' + process.env.IP_ADDR + '/' + process.env.PATH_TO_MERGED_CLIPS + randomPath, image: 'http://i.imgur.com/wSNPtJZ.png' });
+		res.send({video: 'http://' + process.env.IP_ADDR + '/' + process.env.PATH_TO_MERGED_CLIPS + randomPath, image: 'http://' + process.env.IP_ADDR + '/' + process.env.PATH_TO_MERGED_CLIPS + thumbnailPath });
 
     }); 
     deleteTemps();
@@ -136,6 +138,18 @@ function deleteTemps() {
 // 	}, '/', function(err) {
 // 		console.log('screenshots were saved');
 // 	});
+
+
+function thumbnail(finalVid) {
+	var randomName = (Math.floor(Math.random() * (9999999999 - 1000000000 +1)) + 1000000000) + '.png';
+    child_process('ffmpeg -i '+ finalVid +' -ss 03 -vframes 1 ' + process.env.PATH_TO_DIR + process.env.PATH_TO_MERGED_CLIPS + randomName, function (err) {
+        if (err)
+            console.log(err);
+
+    });
+
+    return randomName;
+}
 
 
 //------------------------------------THUMBNAIL, YO-------------------------------------------------------------------//

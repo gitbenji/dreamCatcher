@@ -41,7 +41,7 @@ function storeVideoInfo(file, id, tagArr){
 
 
 
-	child_process('mv ./toBeTagged/*.mp4 ' + process.env.PATH_TO_DIR + process.env.PATH_TO_VIDEO_CLIPS, function(err){
+	child_process('mv ./public/toBeTagged/*.mp4 ' + process.env.PATH_TO_DIR + process.env.PATH_TO_VIDEO_CLIPS, function(err){
 		if (err)
 			console.log(err);
 		else
@@ -158,7 +158,7 @@ function runThroughFiles(dir){
 }
 
 // run through files and tag them and then store them
-var folderPath = './toBeTagged';
+var folderPath = './public/toBeTagged';
 runThroughFiles(folderPath);
 
 
