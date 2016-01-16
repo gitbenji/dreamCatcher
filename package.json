@@ -18,6 +18,8 @@
   "homepage": "https://github.com/gitbenji/dreamCatcher#readme",
   "dependencies": {
     "dotenv": "^1.2.0",
+    "glob": "^6.0.4",
+    "mongoose": "^4.3.6",
     "stdio": "^0.2.7"
   }
 }
