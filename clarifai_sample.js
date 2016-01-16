@@ -84,7 +84,7 @@ function commonResultHandler( err, res ) {
 
 // exampleTagSingleURL() shows how to request the tags for a single image URL
 function exampleTagSingleURL() {
-	var testImageURL = 'http://www.clarifai.com/img/metro-north.jpg';
+	var testImageURL = 'http://104.236.30.131/2_to_4.mp4';
 	var ourId = "train station 1"; // this is any string that identifies the image to your system
 
 	// Clarifai.setRequestTimeout( 100 ); // in ms - expect: force a timeout response
@@ -138,8 +138,8 @@ var docids = [
 
 
 exampleTagSingleURL();
-exampleTagMultipleURL();
-exampleFeedback();
+//exampleTagMultipleURL();
+//exampleFeedback();
 
 Clarifai.clearThrottleHandler();
 
