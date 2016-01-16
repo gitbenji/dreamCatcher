@@ -4,6 +4,7 @@
 var dotenv = require('dotenv').load();
 var mongoose = require('mongoose');
 var glob = require('glob');
+var child_process = require('child_process').exec;
 
 
 // set up mongodb mongoose connection & models

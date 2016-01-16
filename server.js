@@ -129,13 +129,13 @@ function deleteTemps() {
 
 //------------------------------------THUMBNAIL, YO-------------------------------------------------------------------//
 
-var proc = ffmpeg('output.mp4')
-	.takeScreenshots({
-		count: 1,
-		timemarks: [ '2' ]
-	}, '/', function(err) {
-		console.log('screenshots were saved');
-	});
+// var proc = ffmpeg('output.mp4')
+// 	.takeScreenshots({
+// 		count: 1,
+// 		timemarks: [ '2' ]
+// 	}, '/', function(err) {
+// 		console.log('screenshots were saved');
+// 	});
 
 
 //------------------------------------THUMBNAIL, YO-------------------------------------------------------------------//
