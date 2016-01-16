@@ -148,7 +148,7 @@ function runThroughFiles(dir){
 	  	var index = filepath.lastIndexOf('/');
 	  	var ourId = filepath.substring(index + 1);
 	  	console.log(ourId);
-		var testURL = 'http://' + process.env.IP_ADDR + '/' + process.env.PATH_TO_VIDEO_CLIPS + ourId;
+		var testURL = 'http://' + process.env.IP_ADDR + '/' + process.env.PATH_TO_TAGGING_CLIPS + ourId;
 
 		// make call to clarafai to get the tags for that certain video
 		Clarifai.tagURL(testURL , ourId, commonResultHandler);
