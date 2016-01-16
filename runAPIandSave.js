@@ -140,7 +140,7 @@ function runThroughFiles(dir){
 	  if(err)
 	  	console.log('-- ERROR GETTING FILES WITH GLOB --');
 
-	  //console.log(files);
+	  console.log(files);
 
 	  // loop through filenames 	  
 	  for(var i = 0; i < files.length; i++){
