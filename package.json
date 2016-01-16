@@ -1,0 +1,23 @@
+{
+  "name": "dream-catcher",
+  "version": "1.0.0",
+  "description": "",
+  "main": "clarifai_node.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gitbenji/dreamCatcher.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gitbenji/dreamCatcher/issues"
+  },
+  "homepage": "https://github.com/gitbenji/dreamCatcher#readme",
+  "dependencies": {
+    "dotenv": "^1.2.0",
+    "stdio": "^0.2.7"
+  }
+}
