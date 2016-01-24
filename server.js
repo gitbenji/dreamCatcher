@@ -61,7 +61,7 @@ function receive(videos, res) {
 		}
 	}
 }
-
+// convert videos to .mpg
 function concat(videos, temparr, res) {
 	console.log(videos.length-1);
 	for(var i = 0; i < videos.length; i++) {
@@ -77,16 +77,36 @@ function concat(videos, temparr, res) {
 	}
 }
 
+// merge .mpg's into one .mpg, but this function just creates the string to execute
 function merge(videos, temparr, res) {
 	// console.log('merge');
-	var string = "cat ";
-	for (var i = 0; i < videos.length; i++){
-		string += './tempVids/'+temparr[i]+".mpg "
-		if (i === videos.length-1) {
-			// console.log('execute');
-			execute(string, res);
+
+	var maxTen = [];
+	if (temparr.length > 10){
+
+		var max = 10;
+
+		for(var i = 0; i < max; i++){
+			var rand = Math.floor(Math.random() * temparr.length);
+			var current = temparr[rand];
+			if(maxTen.indexOf(current) == -1){
+				maxTen.push(current);
+			} else {
+				i--;
+			}
 		}
+	} else {
+		maxTen = temparr;
 	}
+
+	console.log(maxTen);
+	
+	var string = "cat ";
+	for (var i = 0; i < maxTen.length; i++){
+		string += './tempVids/' + maxTen[i] + ".mpg ";
+	}
+
+	execute(string, res);
 }
 
 function execute(string, res) {
@@ -101,13 +121,15 @@ function execute(string, res) {
 function finish(res) {
 	var randomPath = (Math.floor(Math.random() * (9999999999 - 1000000000 +1)) + 1000000000) + '.mp4';
 	var filepath = process.env.PATH_TO_DIR + process.env.PATH_TO_MERGED_CLIPS + randomPath;
-	var thumbnailPath = thumbnail(filepath);
+	
 	child_process('ffmpeg -i intermediate_all.mpg -qscale:v 2 ' + filepath, function (err, data) {
 		if(err)
 			console.log(err);
-
 		
-		res.send({video: 'http://' + process.env.IP_ADDR + '/' + process.env.PATH_TO_MERGED_CLIPS + randomPath, image: 'http://' + process.env.IP_ADDR + '/' + process.env.PATH_TO_MERGED_CLIPS + thumbnailPath });
+		thumbnail(filepath, function(thumbnailPath){
+			res.send({video: 'http://' + process.env.IP_ADDR + process.env.PATH_TO_MERGED_CLIPS + randomPath, image: 'http://' + process.env.IP_ADDR + process.env.PATH_TO_MERGED_CLIPS + thumbnailPath });
+		});
+		
 
     }); 
     deleteTemps();
@@ -140,15 +162,17 @@ function deleteTemps() {
 // 	});
 
 
-function thumbnail(finalVid) {
+function thumbnail(finalVid, callback) {
 	var randomName = (Math.floor(Math.random() * (9999999999 - 1000000000 +1)) + 1000000000) + '.png';
+	//console.log('THUMBNAIL URL:' + 'ffmpeg -i '+ finalVid +' -ss 03 -vframes 1 ' + process.env.PATH_TO_DIR + process.env.PATH_TO_MERGED_CLIPS + randomName);
     child_process('ffmpeg -i '+ finalVid +' -ss 03 -vframes 1 ' + process.env.PATH_TO_DIR + process.env.PATH_TO_MERGED_CLIPS + randomName, function (err) {
         if (err)
             console.log(err);
 
+        callback(randomName);
     });
 
-    return randomName;
+    
 }
 
 
@@ -164,6 +188,8 @@ e.get('/api/dreamText', jsonParser, function(req, res) {
 
 	//var res;
 
+
+	console.log(req.query.dream);
 	var noPunctuation = req.query.dream.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"");
 	var words = noPunctuation.split(" ");
 	console.log(words);
